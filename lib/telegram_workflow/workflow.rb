@@ -10,7 +10,7 @@ class TelegramWorkflow::Workflow
       set_current_action(TelegramWorkflow.config.start_action)
     end
 
-    chat_id = @session.read(:chat_id) || @session.write(:chat_id, @params.chat_id)
+    chat_id = @params.chat_id
     @client = TelegramWorkflow.config.client.new(chat_id)
   end
 
