@@ -1,6 +1,6 @@
 class TelegramWorkflow::Session
   def initialize(params)
-    @session_id = params.user_id
+    @session_id = [params.user_id, params.chat_id].join('.')
     @store = TelegramWorkflow.config.session_store
 
     @session = if serialized_session = @store.read(@session_id)
