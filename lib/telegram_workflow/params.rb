@@ -63,6 +63,10 @@ class TelegramWorkflow::Params
     @params.dig("inline_query", "query")
   end
 
+  def callback?
+    callback_data.present?
+  end
+
   def start?
     !!message_text&.start_with?("/start")
   end

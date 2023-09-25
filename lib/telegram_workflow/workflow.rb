@@ -22,6 +22,7 @@ class TelegramWorkflow::Workflow
       log_request
       current_action.public_send(current_step) # setup callbacks
       current_action.__run_on_message # run a callback
+      params.callback? && current_action.on_callback? ? current_action.__run_on_callback : current_action.__run_on_message
     else
       @logger.info "[TelegramWorkflow] Processing by shared handler"
     end

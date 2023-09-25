@@ -20,8 +20,12 @@ class TelegramWorkflow::Action
     @on_message = block
   end
 
+  def on_callback(&block)
+    @on_callback = block
+  end
+
   def __reset_callbacks
-    @on_redirect = @on_message = nil
+    @on_redirect = @on_message = @on_callback = nil
   end
 
   def __run_on_redirect
@@ -30,6 +34,14 @@ class TelegramWorkflow::Action
 
   def __run_on_message
     @on_message.call if @on_message
+  end
+
+  def __run_on_callback
+    @on_callback.call if on_callback?
+  end
+
+  def on_callback?
+    @on_callback
   end
 
   private
