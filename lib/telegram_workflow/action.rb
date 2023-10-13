@@ -20,7 +20,8 @@ class TelegramWorkflow::Action
     @on_message = block
   end
 
-  def on_callback(&block)
+  def on_callback(callback_data_whitelist: [], &block)
+    @callback_data_whitelist = callback_data_whitelist
     @on_callback = block
   end
 
@@ -37,7 +38,7 @@ class TelegramWorkflow::Action
   end
 
   def __run_on_callback
-    @on_callback.call if on_callback?
+    @on_callback.call if on_callback? && callback_data_whitelisted?
   end
 
   def on_callback?
@@ -45,6 +46,10 @@ class TelegramWorkflow::Action
   end
 
   private
+
+  def callback_data_whitelisted?
+    @callback_data_whitelist.include?(params.callback_data)
+  end
 
   def session
     @__session
