@@ -1,5 +1,5 @@
 class TelegramWorkflow::Workflow
-  attr_reader :params, :client
+  attr_reader :params, :client, :session
 
   def initialize(raw_params)
     @params  = TelegramWorkflow::Params.new(raw_params)
